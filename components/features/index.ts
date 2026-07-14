@@ -1,0 +1,10 @@
+export { DashboardModule } from "./DashboardModule";
+export { ProjectsModule } from "./ProjectsModule";
+export { IdeasModule } from "./IdeasModule";
+export { NotebookModule } from "./NotebookModule";
+export { TechnologiesModule } from "./TechnologiesModule";
+export { EvolutionModule } from "./EvolutionModule";
+export { ThoughtsModule } from "./ThoughtsModule";
+export { GraphModule } from "./GraphModule";
+export { SettingsModule } from "./SettingsModule";
+export { CommandPalette } from "./CommandPalette";
