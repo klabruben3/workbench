@@ -13,7 +13,7 @@ import {
   TechnologiesModule,
   ThoughtsModule,
 } from "@/components/features";
-import { Sidebar, TopBar } from "@/components/layout";
+import { Greet, Sidebar, TopBar } from "@/components/layout";
 
 export default function App() {
   const [module, setModule] = useState<Module>("dashboard");
@@ -55,6 +55,7 @@ export default function App() {
 
   return (
     <div className="flex h-screen overflow-hidden bg-background text-foreground">
+      <Greet />
       <Sidebar
         active={module}
         onNavigate={setModule}
