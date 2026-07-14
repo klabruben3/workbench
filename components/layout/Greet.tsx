@@ -17,11 +17,9 @@ const backdropVariants = {
 };
 
 export function Greet() {
-  const [showLogo, setShowLogo] = useState(false);
+  const [showLogo, setShowLogo] = useState(true);
 
   useEffect(() => {
-    setShowLogo(true);
-
     const timeout = setTimeout(() => {
       setShowLogo(false);
     }, 7000);
