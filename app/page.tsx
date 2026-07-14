@@ -18,6 +18,7 @@ import { Greet, Sidebar, TopBar } from "@/components/layout";
 export default function App() {
   const [module, setModule] = useState<Module>("dashboard");
   const [paletteOpen, setPaletteOpen] = useState(false);
+  const [showLogo, setShowLogo] = useState(true);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -26,8 +27,16 @@ export default function App() {
         setPaletteOpen((prev) => !prev);
       }
     };
+
+    const timeout = setTimeout(() => {
+      setShowLogo(false);
+    }, 7000);
+
     window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
+    return () => {
+      window.removeEventListener("keydown", handler);
+      clearTimeout(timeout);
+    };
   }, []);
 
   const renderModule = () => {
@@ -54,27 +63,31 @@ export default function App() {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background text-foreground">
-      <Greet />
-      <Sidebar
-        active={module}
-        onNavigate={setModule}
-        onPaletteOpen={() => setPaletteOpen(true)}
-      />
-      <div className="flex flex-col flex-1 min-w-0">
-        <TopBar module={module} />
-        <main
-          className={`flex-1 overflow-y-auto ${module === "graph" ? "flex flex-col" : ""}`}
-        >
-          {renderModule()}
-        </main>
-      </div>
-      {paletteOpen && (
-        <CommandPalette
-          onClose={() => setPaletteOpen(false)}
-          onNavigate={setModule}
-        />
+    <>
+      <Greet showLogo={showLogo} />
+      {!showLogo && (
+        <div className="flex h-screen overflow-hidden bg-background text-foreground">
+          <Sidebar
+            active={module}
+            onNavigate={setModule}
+            onPaletteOpen={() => setPaletteOpen(true)}
+          />
+          <div className="flex flex-col flex-1 min-w-0">
+            <TopBar module={module} />
+            <main
+              className={`flex-1 overflow-y-auto ${module === "graph" ? "flex flex-col" : ""}`}
+            >
+              {renderModule()}
+            </main>
+          </div>
+          {paletteOpen && (
+            <CommandPalette
+              onClose={() => setPaletteOpen(false)}
+              onNavigate={setModule}
+            />
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 }

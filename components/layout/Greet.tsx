@@ -1,6 +1,4 @@
 "use client";
-
-import { useEffect, useState } from "react";
 import Logo from "../ui/Logo";
 import { AnimatePresence, motion } from "motion/react";
 
@@ -16,17 +14,7 @@ const backdropVariants = {
   },
 };
 
-export function Greet() {
-  const [showLogo, setShowLogo] = useState(true);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setShowLogo(false);
-    }, 7000);
-
-    return () => clearTimeout(timeout);
-  }, []);
-
+export function Greet({ showLogo }: { showLogo: boolean }) {
   return (
     <AnimatePresence mode="wait">
       {showLogo && (
