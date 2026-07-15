@@ -1,3 +1,5 @@
+import { FloatCard, Mono, GhostBtn } from "@/components/ui";
+
 export function SettingsModule() {
   const sections = [
     {
@@ -42,24 +44,31 @@ export function SettingsModule() {
   ];
 
   return (
-    <div className="px-8 pt-12 pb-16 max-w-[720px] mx-auto">
-      <h2 className="text-[20px] font-semibold text-foreground mb-8">
+    <div className="p-5 md:p-8 pb-16 max-w-[680px] mx-auto">
+      <h2
+        className="text-[28px] text-foreground mb-8"
+        style={{ fontFamily: '"DM Serif Display", serif' }}
+      >
         Settings
       </h2>
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-7">
         {sections.map((section) => (
           <div key={section.title}>
-            <h3 className="text-[11px] font-semibold text-muted-foreground uppercase tracking-[0.06em] mb-3">
-              {section.title}
-            </h3>
-            <div
-              className="rounded-[10px] border border-border overflow-hidden"
-              style={{ background: "#131310" }}
+            <Mono
+              className="text-[10px] font-semibold uppercase tracking-[0.1em] block mb-3"
+              style={{ color: "#4a4a40" }}
             >
+              {section.title}
+            </Mono>
+            <FloatCard className="overflow-hidden">
               {section.items.map((item, i) => (
                 <div
                   key={item.label}
-                  className={`flex items-center justify-between px-5 py-4 ${i > 0 ? "border-t border-border" : ""}`}
+                  className="flex items-center justify-between px-5 py-4"
+                  style={{
+                    borderTop:
+                      i > 0 ? "1px solid rgba(255,255,255,0.06)" : "none",
+                  }}
                 >
                   <label className="text-[14px] font-medium text-foreground">
                     {item.label}
@@ -67,36 +76,37 @@ export function SettingsModule() {
                   {item.type === "input" && (
                     <input
                       defaultValue={item.value}
-                      className="text-[14px] text-muted-foreground bg-transparent border border-border rounded-[6px] px-3 h-8 text-right outline-none focus:border-primary transition-colors w-48"
+                      className="text-[13px] bg-transparent rounded-xl px-3 h-8 text-right outline-none w-48"
+                      style={{
+                        border: "1px solid rgba(255,255,255,0.09)",
+                        color: "#9a9a88",
+                        fontFamily: "'JetBrains Mono', monospace",
+                      }}
                     />
                   )}
                   {item.type === "static" && (
-                    <span className="text-[14px] text-muted-foreground">
+                    <Mono className="text-[13px]" style={{ color: "#7a7a6a" }}>
                       {item.value}
-                    </span>
+                    </Mono>
                   )}
                   {item.type === "toggle" && (
                     <div
-                      className="relative w-9 h-5 rounded-full cursor-pointer transition-colors"
+                      className="relative w-9 h-5 rounded-full cursor-pointer"
                       style={{
-                        background: "rgba(240,237,230,0.12)",
-                        border: "1px solid rgba(240,237,230,0.15)",
+                        background: "rgba(255,255,255,0.1)",
+                        border: "1px solid rgba(255,255,255,0.12)",
                       }}
                     >
                       <div
-                        className="absolute top-0.5 left-0.5 w-4 h-4 rounded-full transition-transform"
-                        style={{ background: "#7a7a6a" }}
+                        className="absolute top-0.5 left-0.5 w-4 h-4 rounded-full"
+                        style={{ background: "#5a5a4a" }}
                       />
                     </div>
                   )}
-                  {item.type === "action" && (
-                    <button className="text-[13px] font-medium px-3 h-8 rounded-[6px] border border-border text-foreground hover:border-[rgba(240,237,230,0.18)] transition-colors">
-                      Export JSON
-                    </button>
-                  )}
+                  {item.type === "action" && <GhostBtn>Export JSON</GhostBtn>}
                 </div>
               ))}
-            </div>
+            </FloatCard>
           </div>
         ))}
       </div>

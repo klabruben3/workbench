@@ -18,7 +18,6 @@ export function groupByDate(entries: NEntry[]) {
   const today = new Date();
   const yesterday = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
-
   entries.forEach((e) => {
     const d = e.createdAt;
     let label: string;
@@ -37,4 +36,8 @@ export function groupByDate(entries: NEntry[]) {
     groups[seen.get(label)!].entries.push(e);
   });
   return groups;
+}
+
+export function uid() {
+  return Math.random().toString(36).slice(2);
 }

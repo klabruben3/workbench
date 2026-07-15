@@ -12,8 +12,11 @@ export function Bar({
       {Array.from({ length: total }).map((_, i) => (
         <div
           key={i}
-          className="h-[5px] flex-1 rounded-[2px]"
-          style={{ background: i < filled ? color : "rgba(240,237,230,0.1)" }}
+          className="h-[3px] flex-1 rounded-full"
+          style={{
+            background: i < filled ? color : "rgba(255,255,255,0.07)",
+            boxShadow: i < filled ? `0 0 4px ${color}50` : "none",
+          }}
         />
       ))}
     </div>

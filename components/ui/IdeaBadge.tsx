@@ -1,4 +1,8 @@
-export function IdeaBadge({ status }: { status: "active" | "promoted" | "archived" }) {
+export function IdeaBadge({
+  status,
+}: {
+  status: "active" | "promoted" | "archived";
+}) {
   const cfg = {
     active: { color: "#7ca982", label: "Active" },
     promoted: { color: "#e9b44c", label: "Promoted" },
@@ -7,8 +11,12 @@ export function IdeaBadge({ status }: { status: "active" | "promoted" | "archive
   const { color, label } = cfg[status];
   return (
     <span
-      className="text-[11px] font-medium tracking-wide uppercase px-2 py-[3px] rounded shrink-0"
-      style={{ background: color + "26", color }}
+      className="text-[10px] font-semibold tracking-[0.08em] uppercase px-2.5 py-1 rounded-lg shrink-0"
+      style={{
+        background: color + "1a",
+        color,
+        border: `1px solid ${color}25`,
+      }}
     >
       {label}
     </span>

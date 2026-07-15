@@ -1,5 +1,5 @@
 "use client";
-import Logo from "../ui/Logo";
+import Logo from "./Logo";
 import { AnimatePresence, motion } from "motion/react";
 
 const backdropVariants = {

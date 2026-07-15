@@ -9,6 +9,22 @@ export type Module =
   | "graph"
   | "settings";
 
+export type AppMode = "module" | "workspace" | "context";
+
+export type ContextType = "project" | "idea" | "notebook" | "tech" | "thought";
+
+export interface ContextPayload {
+  type: ContextType;
+  id: string;
+}
+
+export interface ChatMessage {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+  ts: Date;
+}
+
 export type ProjectStatus =
   | "idea"
   | "active"

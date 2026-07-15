@@ -8,7 +8,6 @@ import {
   MessageSquare,
   Network,
 } from "lucide-react";
-import type { Module } from "../types";
 
 export const NAV_ITEMS = [
   { id: "dashboard", label: "Dashboard", Icon: LayoutDashboard },
@@ -25,15 +24,3 @@ export const NAV_ITEMS = [
   Icon: typeof LayoutDashboard;
   count?: number;
 }[];
-
-export const MODULE_META: Record<Module, { crumbs: string[] }> = {
-  dashboard: { crumbs: ["Dashboard"] },
-  projects: { crumbs: ["Projects"] },
-  ideas: { crumbs: ["Ideas"] },
-  notebook: { crumbs: ["Notebook"] },
-  technologies: { crumbs: ["Technologies"] },
-  evolution: { crumbs: ["Evolution"] },
-  thoughts: { crumbs: ["Thoughts"] },
-  graph: { crumbs: ["Knowledge Graph"] },
-  settings: { crumbs: ["Settings"] },
-};

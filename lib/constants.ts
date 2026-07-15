@@ -26,4 +26,10 @@ export const PRIORITY_COLOR: Record<Priority, string> = {
   high: "#c9614a",
 };
 
-export const MASTERY_LABEL = ["", "Exploring", "Comfortable", "Proficient", "Expert"];
+export const MASTERY_LABEL = [
+  "",
+  "Exploring",
+  "Comfortable",
+  "Proficient",
+  "Expert",
+];

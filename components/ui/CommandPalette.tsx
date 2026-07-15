@@ -1,19 +1,9 @@
-"use client";
 import { useState, useEffect, useRef } from "react";
-import {
-  Search,
-  X,
-  FolderOpen,
-  Lightbulb,
-  BookOpen,
-  MessageSquare,
-} from "lucide-react";
-import { PROJECTS } from "@/data/projects";
-import { IDEAS } from "@/data/ideas";
-import { ENTRIES } from "@/data/entries";
-import { ACTIVITY } from "@/data/activity";
-import { relativeTime } from "@/lib/helpers";
+import { Search, X, FolderOpen, Lightbulb, BookOpen, MessageSquare } from "lucide-react";
 import type { Module } from "@/types";
+import { PROJECTS, IDEAS, ENTRIES, ACTIVITY } from "@/data/mockData";
+import { relativeTime } from "@/lib/helpers";
+import { Mono } from "./Mono";
 
 export function CommandPalette({
   onClose,
@@ -49,11 +39,7 @@ export function CommandPalette({
   const quickActions = [
     { label: "New Project", Icon: FolderOpen, target: "projects" as Module },
     { label: "New Idea", Icon: Lightbulb, target: "ideas" as Module },
-    {
-      label: "New Notebook Entry",
-      Icon: BookOpen,
-      target: "notebook" as Module,
-    },
+    { label: "New Notebook Entry", Icon: BookOpen, target: "notebook" as Module },
     { label: "New Thought", Icon: MessageSquare, target: "thoughts" as Module },
   ];
 
@@ -87,26 +73,28 @@ export function CommandPalette({
   return (
     <div
       className="fixed inset-0 z-50 flex items-start justify-center"
-      style={{ paddingTop: "14vh" }}
+      style={{ paddingTop: "13vh" }}
     >
       <div
         className="absolute inset-0"
-        style={{ background: "rgba(0,0,0,0.6)" }}
+        style={{ background: "rgba(0,0,0,0.65)" }}
         onClick={onClose}
       />
       <div
-        className="relative w-full shadow-2xl"
+        className="relative w-full rounded-2xl overflow-hidden"
         style={{
           maxWidth: "640px",
-          borderRadius: "14px",
-          background: "#1a1a16",
-          border: "1px solid rgba(240,237,230,0.12)",
-          boxShadow: "0 24px 48px rgba(0,0,0,0.5)",
+          background: "rgba(18,15,10,0.97)",
+          border: "1px solid rgba(255,255,255,0.11)",
+          boxShadow: "0 24px 64px rgba(0,0,0,0.7), 0 4px 16px rgba(0,0,0,0.5)",
+          backdropFilter: "blur(24px)",
         }}
       >
-        {/* Input row */}
-        <div className="flex items-center gap-3 px-4 py-3 border-b border-border">
-          <Search size={15} className="text-muted-foreground shrink-0" />
+        <div
+          className="flex items-center gap-3 px-4 py-3.5"
+          style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}
+        >
+          <Search size={15} style={{ color: "#7a7a6a" }} className="shrink-0" />
           <input
             ref={inputRef}
             value={query}
@@ -115,26 +103,36 @@ export function CommandPalette({
               setSel(0);
             }}
             placeholder="Type a command or search everything…"
-            className="flex-1 bg-transparent text-[15px] text-foreground outline-none placeholder:text-muted-foreground"
-            style={{ fontFamily: '"JetBrains Mono", monospace' }}
+            className="flex-1 bg-transparent text-[14px] text-foreground outline-none"
+            style={{
+              fontFamily: "'JetBrains Mono', monospace",
+              color: "#f0ede6",
+            }}
           />
           {query && (
-            <button
-              onClick={() => setQuery("")}
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
+            <button onClick={() => setQuery("")} style={{ color: "#7a7a6a" }}>
               <X size={13} />
             </button>
           )}
+          <Mono
+            className="text-[11px] px-1.5 py-0.5 rounded-md"
+            style={{
+              color: "#4a4a40",
+              border: "1px solid rgba(255,255,255,0.08)",
+            }}
+          >
+            esc
+          </Mono>
         </div>
-
-        {/* Results */}
         <div className="py-2" style={{ maxHeight: "400px", overflowY: "auto" }}>
           {!q ? (
             <>
-              <div className="px-4 pt-1 pb-2 text-[10px] font-semibold text-muted-foreground uppercase tracking-[0.07em]">
+              <Mono
+                className="text-[9px] font-semibold uppercase tracking-[0.12em] block px-4 pt-2 pb-2"
+                style={{ color: "#4a4a40" }}
+              >
                 Quick actions
-              </div>
+              </Mono>
               {quickActions.map(({ label, Icon, target }, i) => (
                 <button
                   key={label}
@@ -142,35 +140,41 @@ export function CommandPalette({
                     onNavigate(target);
                     onClose();
                   }}
-                  className="w-full flex items-center gap-3 px-4 h-11 text-left text-[14px] text-foreground transition-colors"
+                  className="w-full flex items-center gap-3 px-4 h-11 text-left text-[13px] text-foreground transition-colors"
                   style={{
                     background:
-                      sel === i ? "rgba(240,237,230,0.06)" : "transparent",
+                      sel === i ? "rgba(255,255,255,0.05)" : "transparent",
                   }}
                   onMouseEnter={() => setSel(i)}
                 >
-                  <Icon size={16} className="text-muted-foreground" />
+                  <Icon size={15} style={{ color: "#7a7a6a" }} />
                   {label}
-                  <span
-                    className="ml-auto text-[11px] text-muted-foreground"
-                    style={{ fontFamily: '"JetBrains Mono", monospace' }}
+                  <Mono
+                    className="ml-auto text-[10px]"
+                    style={{ color: "#4a4a40" }}
                   >
                     ⌘N
-                  </span>
+                  </Mono>
                 </button>
               ))}
-              <div className="mx-4 my-2 border-t border-border" />
-              <div className="px-4 pb-2 text-[10px] font-semibold text-muted-foreground uppercase tracking-[0.07em]">
+              <div
+                className="mx-4 my-2"
+                style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
+              />
+              <Mono
+                className="text-[9px] font-semibold uppercase tracking-[0.12em] block px-4 pb-2"
+                style={{ color: "#4a4a40" }}
+              >
                 Recent
-              </div>
+              </Mono>
               {ACTIVITY.slice(0, 4).map((ev) => (
                 <div
                   key={ev.id}
-                  className="flex items-center gap-3 px-4 h-11 text-[14px]"
+                  className="flex items-center gap-3 px-4 h-11 text-[13px]"
                   style={{ color: "#c9c5ba" }}
                 >
                   <div
-                    className="w-[6px] h-[6px] rounded-full shrink-0"
+                    className="w-[5px] h-[5px] rounded-full shrink-0"
                     style={{
                       background:
                         ev.entityType === "project"
@@ -181,9 +185,12 @@ export function CommandPalette({
                     }}
                   />
                   <span className="flex-1 truncate">{ev.entity}</span>
-                  <span className="text-[11px] text-muted-foreground tabular-nums shrink-0">
+                  <Mono
+                    className="text-[10px] shrink-0"
+                    style={{ color: "#4a4a40" }}
+                  >
                     {relativeTime(ev.time)}
-                  </span>
+                  </Mono>
                 </div>
               ))}
             </>
@@ -195,27 +202,30 @@ export function CommandPalette({
                   onNavigate(r.target);
                   onClose();
                 }}
-                className="w-full flex items-center gap-3 px-4 h-11 text-left text-[14px] text-foreground transition-colors"
+                className="w-full flex items-center gap-3 px-4 h-11 text-left text-[13px] text-foreground transition-colors"
                 style={{
                   background:
-                    sel === i ? "rgba(240,237,230,0.06)" : "transparent",
+                    sel === i ? "rgba(255,255,255,0.05)" : "transparent",
                 }}
                 onMouseEnter={() => setSel(i)}
               >
-                <span
-                  className="text-[10px] font-medium uppercase tracking-wide px-1.5 py-0.5 rounded shrink-0"
+                <Mono
+                  className="text-[9px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded-md shrink-0"
                   style={{
-                    background: "rgba(240,237,230,0.08)",
+                    background: "rgba(255,255,255,0.07)",
                     color: "#7a7a6a",
                   }}
                 >
                   {r.type}
-                </span>
+                </Mono>
                 <span className="flex-1 truncate">{r.label}</span>
               </button>
             ))
           ) : (
-            <div className="px-4 py-10 text-center text-[14px] text-muted-foreground">
+            <div
+              className="px-4 py-10 text-center text-[13px]"
+              style={{ color: "#7a7a6a" }}
+            >
               No results for &ldquo;{query}&rdquo;
             </div>
           )}
