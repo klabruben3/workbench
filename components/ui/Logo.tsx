@@ -43,7 +43,7 @@ export default function Logo() {
           variants={scaleXVariants}
           custom={1.3}
           transition={{ duration: 1, ease: "linear", delay: 1 }}
-          className="absolute bottom-full w-full h-[0.5px] bg-gray-500/40 origin-center"
+          className="absolute bottom-full w-full h-[0.5px] bg-white/90 origin-center"
         />
 
         {/* stage-2 */}
@@ -51,7 +51,7 @@ export default function Logo() {
           variants={scaleXVariants}
           custom={1.6}
           transition={{ duration: 1, ease: "linear", delay: 1.5 }}
-          className="absolute left-0 top-[-10px] w-full h-[0.5px] bg-gray-500/40 origin-center"
+          className="absolute left-0 top-[-10px] w-full h-[0.5px] bg-white/90 origin-center"
         />
 
         {/* Horizontal bottom */}
@@ -60,7 +60,7 @@ export default function Logo() {
           variants={scaleXVariants}
           custom={1.5}
           transition={{ duration: 1, ease: "linear", delay: 2.5 }}
-          className="absolute left-0 bottom-0 w-full h-[0.5px] bg-gray-500/40 origin-center"
+          className="absolute left-0 bottom-0 w-full h-[0.5px] bg-white/90 origin-center"
         />
 
         {/* stage-2 */}
@@ -68,7 +68,7 @@ export default function Logo() {
           variants={scaleXVariants}
           custom={1.3}
           transition={{ duration: 1, ease: "linear", delay: 3 }}
-          className="absolute left-0 bottom-[-10px] w-full h-[0.5px] bg-gray-500/40 origin-center"
+          className="absolute left-0 bottom-[-10px] w-full h-[0.5px] bg-white/90 origin-center"
         />
 
         {/* Vertical Center */}
@@ -76,7 +76,7 @@ export default function Logo() {
           variants={scaleYVariants}
           custom={1.4}
           transition={{ duration: 1, ease: "linear", delay: 2 }}
-          className="absolute left-1/2 top-0 -translate-x-1/2 w-[0.5px] h-full bg-gray-500/40 origin-center"
+          className="absolute left-1/2 top-0 -translate-x-1/2 w-[0.5px] h-full bg-white/90 origin-center"
         />
 
         {/* Vertical left */}
@@ -85,7 +85,7 @@ export default function Logo() {
           variants={scaleYVariants}
           custom={1.3}
           transition={{ duration: 1, ease: "linear", delay: 2 }}
-          className="absolute left-0 top-0 w-[0.5px] h-full bg-gray-500/40 origin-center"
+          className="absolute left-0 top-0 w-[0.5px] h-full bg-white/90 origin-center"
         />
 
         {/* stage-2 */}
@@ -93,7 +93,7 @@ export default function Logo() {
           variants={scaleYVariants}
           custom={1.6}
           transition={{ duration: 1, ease: "linear", delay: 3.5 }}
-          className="absolute left-[-10px] top-0 w-[0.5px] h-full bg-gray-500/40 origin-center"
+          className="absolute left-[-10px] top-0 w-[0.5px] h-full bg-white/90 origin-center"
         />
 
         {/* Vertical right */}
@@ -102,7 +102,7 @@ export default function Logo() {
           variants={scaleYVariants}
           custom={1.1}
           transition={{ duration: 1, ease: "linear", delay: 3 }}
-          className="absolute right-0 top-0 w-[0.5px] h-full bg-gray-500/40 origin-center"
+          className="absolute right-0 top-0 w-[0.5px] h-full bg-white/90 origin-center"
         />
 
         {/* stage-2 */}
@@ -110,7 +110,7 @@ export default function Logo() {
           variants={scaleYVariants}
           custom={1.5}
           transition={{ duration: 1, ease: "linear", delay: 4 }}
-          className="absolute right-[-10px] top-0 w-[0.5px] h-full bg-gray-500/40 origin-center"
+          className="absolute right-[-10px] top-0 w-[0.5px] h-full bg-white/90 origin-center"
         />
 
         {/* Center circle */}
@@ -142,7 +142,7 @@ export default function Logo() {
             variants={scaleXVariants}
             custom={1}
             transition={{ duration: 1, ease: "linear" }}
-            className="absolute top-1/2 -translate-y-1/2 w-full h-[0.5px] bg-gray-500/40 origin-center"
+            className="absolute top-1/2 -translate-y-1/2 w-full h-[0.5px] bg-white/90 origin-center"
           />
         </div>
 
