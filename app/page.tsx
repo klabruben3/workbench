@@ -586,7 +586,9 @@ function Canvas() {
 
 const CARD_BASE: CSSProperties = {
   background: "#131109",
-  border: "1px solid rgba(255,255,255,0.07)",
+  borderWidth: "1px",
+  borderStyle: "solid",
+  borderColor: "rgba(255,255,255,0.07)",
   boxShadow:
     "0 2px 16px rgba(0,0,0,0.4), 0 1px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04)",
 };
