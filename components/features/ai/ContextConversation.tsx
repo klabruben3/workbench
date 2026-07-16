@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft } from "lucide-react";
-import type { ContextPayload, ChatMessage, ContextType } from "../../../types";
-import { CARD_BASE } from "../../ui/FloatCard";
+import type { ContextPayload, ChatMessage, ContextType } from "@/types";
+
+import { CARD_BASE } from "@/components/ui/FloatCard";
+import { Mono } from "@/components/ui";
+
 import { MauriceAvatar } from "./MauriceAvatar";
 import { ChatBubble } from "./ChatBubble";
 import { TypingIndicator } from "./TypingIndicator";
 import { ChatInput } from "./ChatInput";
 import { ContextCard } from "./ContextCard";
-import { Mono } from "../../ui/Mono";
 
 export function ContextConversation({
   context,

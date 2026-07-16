@@ -1,4 +1,4 @@
-import type { ChatMessage } from "../../../types";
+import type { ChatMessage } from "@/types";
 import { MauriceAvatar } from "./MauriceAvatar";
 
 export function ChatBubble({ msg }: { msg: ChatMessage }) {

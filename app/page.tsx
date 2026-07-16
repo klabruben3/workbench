@@ -15,7 +15,7 @@ import {
   getMauricePrimer,
   getMauriceResponse,
   WORKSPACE_PRIMER,
-} from "@/lib/ai";
+} from "@/lib/aiResponse";
 
 import { Sidebar, FloatingBackground } from "@/components/layout";
 
@@ -37,6 +37,7 @@ import {
   GraphModule,
   SettingsModule,
 } from "@/components/features";
+import { askAI } from "@/components/features/ai/actions/chat";
 
 export default function App() {
   const [module, setModule] = useState<Module>("dashboard");
@@ -61,43 +62,56 @@ export default function App() {
     return () => window.removeEventListener("keydown", handler);
   }, []);
 
-  const simulateResponse = useCallback(
-    (contextType: ContextType | "workspace", userMsg: string) => {
-      setTyping(true);
-      setTimeout(
-        () => {
-          setTyping(false);
-          const response = getMauriceResponse(contextType, userMsg);
-          setMessages((prev) => [
-            ...prev,
-            { id: uid(), role: "assistant", content: response, ts: new Date() },
-          ]);
-        },
-        900 + Math.random() * 600,
+  const simulateResponse = async (
+    contextType: ContextType | "workspace",
+    nextMessages: ChatMessage[],
+  ) => {
+    setTyping(true);
+
+    try {
+      const response = await askAI(
+        nextMessages.map(({ role, content }) => ({
+          role,
+          content,
+        })),
+        "grod",
       );
-    },
-    [],
-  );
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: crypto.randomUUID(),
+          role: "assistant",
+          content: response.text,
+          ts: new Date(),
+        },
+      ]);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setTyping(false);
+    }
+  };
 
   const enterWorkspace = useCallback(() => {
     setAppMode("workspace");
     setContext(null);
-    const primer: ChatMessage = {
-      id: uid(),
-      role: "assistant",
-      content: WORKSPACE_PRIMER,
-      ts: new Date(),
-    };
-    setMessages([primer]);
+    // const primer: ChatMessage = {
+    //   id: uid(),
+    //   role: "assistant",
+    //   content: WORKSPACE_PRIMER,
+    //   ts: new Date(),
+    // };
+    // setMessages([primer]);
   }, []);
 
   const enterContext = useCallback((type: ContextType, id: string) => {
     setAppMode("context");
     setContext({ type, id });
-    const primer = getMauricePrimer(type, id);
-    setMessages([
-      { id: uid(), role: "assistant", content: primer, ts: new Date() },
-    ]);
+    // const primer = getMauricePrimer(type, id);
+    // setMessages([
+    //   { id: uid(), role: "assistant", content: primer, ts: new Date() },
+    // ]);
   }, []);
 
   const exitConversation = useCallback(() => {
@@ -107,20 +121,23 @@ export default function App() {
     setTyping(false);
   }, []);
 
-  const handleSend = useCallback(
-    (text: string) => {
-      const msg: ChatMessage = {
-        id: uid(),
-        role: "user",
-        content: text,
-        ts: new Date(),
-      };
-      setMessages((prev) => [...prev, msg]);
-      const ctype = context?.type ?? "workspace";
-      simulateResponse(ctype, text);
-    },
-    [context, simulateResponse],
-  );
+  const handleSend = async (text: string) => {
+    if (!text.trim() || typing) return;
+
+    const msg: ChatMessage = {
+      id: uid(),
+      role: "user",
+      content: text,
+      ts: new Date(),
+    };
+
+    const nextMessages: ChatMessage[] = [...messages, msg];
+
+    setMessages(nextMessages);
+
+    const ctype = context?.type ?? "workspace";
+    await simulateResponse(ctype, nextMessages);
+  }
 
   const guardedAction = useCallback(
     (action: () => void) => {
@@ -220,6 +237,11 @@ export default function App() {
         return <SettingsModule />;
     }
   };
+
+  useEffect(() =>{
+    console.log(messages);
+    
+  }, [messages])
 
   return (
     <div className="relative flex h-screen overflow-hidden bg-background text-foreground">

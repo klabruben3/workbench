@@ -1,12 +1,16 @@
-import type { ContextType } from "../../../types";
-import { PROJECTS, IDEAS, ENTRIES, TECHNOLOGIES, THOUGHTS } from "../../../data/mockData";
-import { STATUS_CFG, PRIORITY_COLOR, MASTERY_LABEL } from "../../../lib/constants";
-import { relativeTime } from "../../../lib/helpers";
-import { Mono } from "../../ui/Mono";
-import { StatusPill } from "../../ui/StatusPill";
-import { IdeaBadge } from "../../ui/IdeaBadge";
-import { Bar } from "../../ui/Bar";
-import { InlineTag } from "../../ui/InlineTag";
+import type { ContextType } from "@/types";
+import {
+  PROJECTS,
+  IDEAS,
+  ENTRIES,
+  TECHNOLOGIES,
+  THOUGHTS,
+} from "@/data/mockData";
+import { STATUS_CFG, PRIORITY_COLOR, MASTERY_LABEL } from "@/lib/constants";
+import { relativeTime } from "@/lib/helpers";
+
+import { Mono, StatusPill, IdeaBadge, Bar, InlineTag } from "@/components/ui";
+
 import { AlertCircle, ArrowRight } from "lucide-react";
 
 export function ContextCard({ type, id }: { type: ContextType; id: string }) {

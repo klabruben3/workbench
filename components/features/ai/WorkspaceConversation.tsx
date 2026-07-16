@@ -1,11 +1,11 @@
 import { useEffect, useRef } from "react";
 import { ChevronLeft } from "lucide-react";
-import type { ChatMessage } from "../../../types";
+import type { ChatMessage } from "@/types";
 import { MauriceAvatar } from "./MauriceAvatar";
 import { ChatBubble } from "./ChatBubble";
 import { TypingIndicator } from "./TypingIndicator";
 import { ChatInput } from "./ChatInput";
-import { Mono } from "../../ui/Mono";
+import { Mono } from "@/components/ui/Mono";
 
 export function WorkspaceConversation({
   messages,
