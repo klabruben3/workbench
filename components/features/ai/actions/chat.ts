@@ -9,10 +9,10 @@ import { groq } from "@/lib/ai/groq";
 import { tools } from "./tools";
 import { systemPromt } from "./data";
 
-type Model = "gemini" | "openai" | "grod";
+type Model = "gemini" | "openai" | "groq";
 
 export async function askAI(messages: ModelMessage[], name: Model) {
-  const { text, toolResults } = await generateText({
+  const { text, toolResults, toolCalls } = await generateText({
     model:
       name === "openai"
         ? openai("gpt-4o")
@@ -20,11 +20,11 @@ export async function askAI(messages: ModelMessage[], name: Model) {
           ? gemini("gemini-2.0-flash")
           : groq("llama-3.3-70b-versatile"),
     messages,
-    tools: tools,
+    tools,
     maxOutputTokens: 512,
     instructions: systemPromt
   });
   
 
-  return { text, toolResults };
+  return { text, toolResults, toolCalls };
 }

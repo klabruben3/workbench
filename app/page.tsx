@@ -38,6 +38,7 @@ import {
   SettingsModule,
 } from "@/components/features";
 import { askAI } from "@/components/features/ai/actions/chat";
+import { ModelMessage, ToolCallPart, ToolResultPart } from "ai";
 
 export default function App() {
   const [module, setModule] = useState<Module>("dashboard");
@@ -69,20 +70,81 @@ export default function App() {
     setTyping(true);
 
     try {
-      const response = await askAI(
+      const primaryResponse = await askAI(
         nextMessages.map(({ role, content }) => ({
           role,
           content,
-        })),
-        "grod",
+        })) as ModelMessage[],
+        "groq",
       );
+
+      if (!primaryResponse.text) {
+        const toolResult: ToolResultPart = {
+          type: "tool-result",
+          toolCallId: primaryResponse.toolResults[0].toolCallId,
+          toolName: primaryResponse.toolResults[0].toolName,
+          output: {
+            type: "text",
+            value: "User successfully added.",
+          },
+        };
+
+        const toolCall: ToolCallPart = {
+          type: "tool-call",
+          toolCallId: primaryResponse.toolCalls[0].toolCallId,
+          toolName: primaryResponse.toolResults[0].toolName,
+          input: primaryResponse.toolCalls[0].input,
+        };
+
+        const toolResultMessage = {
+          id: crypto.randomUUID(),
+          role: "tool",
+          content: [toolResult],
+          ts: new Date(),
+        };
+
+        const toolCallMessage = {
+          id: crypto.randomUUID(),
+          role: "assistant",
+          content: [toolCall],
+          ts: new Date(),
+        };
+
+        const returnedMessages = [
+          ...nextMessages,
+          toolCallMessage,
+          toolResultMessage,
+        ] as ChatMessage[];
+
+        setMessages(returnedMessages);
+
+        const secondaryResponse = await askAI(
+          returnedMessages.map(({ role, content }) => ({
+            role,
+            content,
+          })) as ModelMessage[],
+          "groq",
+        );
+
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: crypto.randomUUID(),
+            role: "assistant",
+            content: secondaryResponse.text,
+            ts: new Date(),
+          },
+        ]);
+        
+        return;
+      }
 
       setMessages((prev) => [
         ...prev,
         {
           id: crypto.randomUUID(),
           role: "assistant",
-          content: response.text,
+          content: primaryResponse.text,
           ts: new Date(),
         },
       ]);
@@ -96,22 +158,22 @@ export default function App() {
   const enterWorkspace = useCallback(() => {
     setAppMode("workspace");
     setContext(null);
-    // const primer: ChatMessage = {
-    //   id: uid(),
-    //   role: "assistant",
-    //   content: WORKSPACE_PRIMER,
-    //   ts: new Date(),
-    // };
-    // setMessages([primer]);
+    const primer: ChatMessage = {
+      id: uid(),
+      role: "assistant",
+      content: WORKSPACE_PRIMER,
+      ts: new Date(),
+    };
+    setMessages([primer]);
   }, []);
 
   const enterContext = useCallback((type: ContextType, id: string) => {
     setAppMode("context");
     setContext({ type, id });
-    // const primer = getMauricePrimer(type, id);
-    // setMessages([
-    //   { id: uid(), role: "assistant", content: primer, ts: new Date() },
-    // ]);
+    const primer = getMauricePrimer(type, id);
+    setMessages([
+      { id: uid(), role: "assistant", content: primer, ts: new Date() },
+    ]);
   }, []);
 
   const exitConversation = useCallback(() => {
@@ -137,7 +199,7 @@ export default function App() {
 
     const ctype = context?.type ?? "workspace";
     await simulateResponse(ctype, nextMessages);
-  }
+  };
 
   const guardedAction = useCallback(
     (action: () => void) => {
@@ -237,11 +299,6 @@ export default function App() {
         return <SettingsModule />;
     }
   };
-
-  useEffect(() =>{
-    console.log(messages);
-    
-  }, [messages])
 
   return (
     <div className="relative flex h-screen overflow-hidden bg-background text-foreground">

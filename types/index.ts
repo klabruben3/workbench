@@ -1,3 +1,5 @@
+import { AssistantContent, ToolCallPart, ToolResultPart, UserContent } from "ai";
+
 export type Module =
   | "dashboard"
   | "projects"
@@ -20,10 +22,12 @@ export interface ContextPayload {
 
 export interface ChatMessage {
   id: string;
-  role: "user" | "assistant";
-  content: string;
+  role: "user" | "assistant" | "tool";
+  content: UserContent | AssistantContent | ToolResultPart | ToolCallPart;
   ts: Date;
 }
+
+
 
 export type ProjectStatus =
   | "idea"

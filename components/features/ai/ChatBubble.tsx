@@ -3,6 +3,7 @@ import { MauriceAvatar } from "./MauriceAvatar";
 
 export function ChatBubble({ msg }: { msg: ChatMessage }) {
   const isUser = msg.role === "user";
+  if(typeof msg.content !== "string") return;
 
   if (isUser) {
     return (
