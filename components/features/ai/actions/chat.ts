@@ -7,11 +7,10 @@ import { openai } from "@/lib/ai/openai";
 import { groq } from "@/lib/ai/groq";
 
 import { tools } from "./tools";
-import { systemPromt } from "./data";
 
 type Model = "gemini" | "openai" | "groq";
 
-export async function askAI(messages: ModelMessage[], name: Model) {
+export async function askAI(messages: ModelMessage[], name: Model, systemPromt: string) {  
   const { text, toolResults, toolCalls } = await generateText({
     model:
       name === "openai"
@@ -24,7 +23,6 @@ export async function askAI(messages: ModelMessage[], name: Model) {
     maxOutputTokens: 512,
     instructions: systemPromt
   });
-  
 
   return { text, toolResults, toolCalls };
 }

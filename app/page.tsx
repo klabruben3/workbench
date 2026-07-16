@@ -39,6 +39,7 @@ import {
 } from "@/components/features";
 import { askAI } from "@/components/features/ai/actions/chat";
 import { ModelMessage, ToolCallPart, ToolResultPart } from "ai";
+import { checkName, createSystemPrompt } from "@/components/features/ai/actions/data";
 
 export default function App() {
   const [module, setModule] = useState<Module>("dashboard");
@@ -68,6 +69,8 @@ export default function App() {
     nextMessages: ChatMessage[],
   ) => {
     setTyping(true);
+    const userName = await checkName();
+    const prompt = createSystemPrompt({name: userName});
 
     try {
       const primaryResponse = await askAI(
@@ -76,6 +79,7 @@ export default function App() {
           content,
         })) as ModelMessage[],
         "groq",
+        prompt
       );
 
       if (!primaryResponse.text) {
@@ -124,6 +128,7 @@ export default function App() {
             content,
           })) as ModelMessage[],
           "groq",
+          prompt
         );
 
         setMessages((prev) => [
