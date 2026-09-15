@@ -445,3 +445,4 @@ This project was one attempt at answering it.
 I no longer intend to continue Workbench as a standalone product, but the problem it explored is still interesting.
 
 So rather than leave the project inaccessible in a private repository, it is being released for anyone who might find the code, architecture, or idea useful.
+
